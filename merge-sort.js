@@ -1,18 +1,32 @@
+function merge(sortedLeftArr, sortedRightArr) {
+    let sortedArr = [];
+    const arrLength = sortedLeftArr.length + sortedRightArr.length;
+    for (let i = 0; i < arrLength; i++) {
+        if (sortedLeftArr[0] < sortedRightArr[0] ||
+        (sortedLeftArr[0] === sortedRightArr[0])
+        ) {
+        sortedArr.push(sortedLeftArr.shift());
+    } else if (sortedLeftArr[0] > sortedRightArr[0]) {
+        sortedArr.push(sortedRightArr.shift());
+    } else if (!sortedLeftArr[0]) {
+        sortedArr.push(sortedRightArr.shift());
+    } else if (!sortedRightArr[0]) {
+        sortedArr.push(sortedLeftArr.shift());
+    }
+    }
+    return sortedArr;
+}
+
 function mergeSort(arr) {
     if (arr.length === 1) {
-        console.log("Ping")
-        return arr[0]
+        return arr;
     }
-    if (arr.length === 2) {
-        console.log("Ping 2")
-        if (arr[0] > arr[1]) {
-            return [arr[1], arr[0]];
-        } else return [arr[0], arr[1]];
-    }
-    const leftArr = mergeSort(arr.slice(0, Math.floor(arr.length / 2)));
-    const rightArr = mergeSort(arr.slice(Math.floor(arr.length / 2)));
+    let leftArr = arr.slice(0, Math.floor(arr.length / 2));
+    let rightArr = arr.slice(Math.floor(arr.length / 2));
+    const sortedLeftArr = mergeSort(leftArr);
+    const sortedRightArr = mergeSort(rightArr);
 
-    return leftArr.concat(rightArr);
+    return merge(sortedLeftArr, sortedRightArr)
 }
 
 const test1 = [3, 2, 1, 13, 8, 5, 0, 1]; 
